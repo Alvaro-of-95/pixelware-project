@@ -2,4 +2,5 @@
 Proyecto de fin de curso
 
 Cambios:
- -  - Añadido el fichero Web/resources/scripts/js/main.js
+   - Editado el fichero index.html
+   - Añadido el fichero Web/resources/scripts/js/main.js
