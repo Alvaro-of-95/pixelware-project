@@ -1,17 +1,45 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="appTiempo">
 <head>
     <meta charset="UTF-8">
     <title>Inicio</title>
 	<link rel="stylesheet" type="text/css" href="resources/styles/css/bootswatch-paper.css">
     <link rel="stylesheet" type="text/css" href="resources/styles/css/main.css"/>
 </head>
-<body>
+<body ng-controller="appController">
 	
-	
+	<div class="container">
+		<section class="col-md-6">
+			<form name="formData" novalidate="novalidate" ng-submit="showCity(ciudad)">
+				<label for="nombre">Introduce una ciudad:</label>
+				<input type="text" name="ciudad" id="ciudad"
+				required="required" ng-model="ciudad.nombre"/>
+				
+				<input type="submit" value="Mostrar tiempo"/>
+			</form>
+			
+			<div ng-show="ready == 1">
+				<h3>Cargando datos...</h3>
+			</div>
+		
+			<div ng-show="ready == 2">
+				<h3>Datos del servicio web</h3>
+				<p>Ciudad: {{data.location.name}} ({{data.location.country}})</p>
+				<p>Hora: {{data.location.localtime}}</p>
+				<p>
+					Tiempo: {{data.current.temp_c}} ºC 
+					<img src="//{{data.current.condition.icon}}"/>
+				</p>
+			</div>
+			
+			<div ng-show="ready == 3">
+				<p>Error: No introduciste una ciudad válida.</p>
+			</div>
+		</section>
+	</div>
 	
 	<script type="text/javascript" src="resources/scripts/js/jquery-3.2.1.min.js"></script>
 	<script type="text/javascript" src="resources/scripts/js/angular.min.js"></script>
-	<script type="text/javascript" src="resources/scripts/js/main_jQuery.js"></script>
+	<script type="text/javascript" src="resources/scripts/js/main.js"></script>
 </body>
 </html>
