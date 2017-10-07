@@ -63,6 +63,7 @@ input[type="submit"]:active {
 	transition: background 0s, box-shadow 0s;
 }
 
+/* CSS para eliminar el fondo amarillo en el autocompletar: */
 body .container section form input[type="text"]:-webkit-autofill {
 	-webkit-box-shadow: 0 0 0px 60px white inset;
 }
