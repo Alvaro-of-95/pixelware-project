@@ -1,49 +1,54 @@
 <!DOCTYPE html>
-<html ng-app="appTiempo">
+<html ng-app="appLogin">
 <head>
     <meta charset="UTF-8">
-    <title>Inicio</title>
+    <title>Login</title>
 	<link rel="stylesheet" type="text/css" href="resources/styles/css/bootswatch-paper.css">
-    <link rel="stylesheet" type="text/css" href="resources/styles/css/main.css"/>
+    <link rel="stylesheet" type="text/css" href="resources/styles/css/index.css"/>
 </head>
 <body ng-controller="appController">
 	
 	<div class="container">
 		<section class="col-md-6 col-md-offset-3">
+			<h3>Login</h3>
+		
 			<form name="formData" ng-submit="showCity()">
-				<label for="nombre">Introduce una ciudad</label>
-				<input type="text" name="ciudad" id="ciudad"
-				required="required" ng-model="ciudad"/>
+				<table>
+					<tr>
+						<td>Usuario</td>
+						<td>
+							<input type="text" name="nombre" id="nombre"
+							required="required" ng-model="nombre"/>
+						</td>
+					</tr>
+					<tr>
+						<td>Contraseña</td>
+						<td>
+							<input type="password" name="clave" id="clave"
+							required="required" ng-model="clave"/>
+						</td>
+					</tr>
+				</table>
 				
-				<input type="submit" value="Mostrar tiempo"/>
+				<input type="submit" value="Iniciar sesión"/>
 			</form>
 			
 			<div ng-show="ready == 1" class="alert alert-dismissible alert-info">
-				Cargando datos...
+				Procesando...
 			</div>
 			
-			<div ng-show="ready == 2">
-				<h3>Datos del tiempo</h3>
-				<p><strong>Ciudad: </strong>{{data.location.name}} ({{data.location.country}})</p>
-				<p>
-					<strong>Tiempo: </strong>{{data.current.temp_c}} ºC 
-					<img src="//{{data.current.condition.icon}}"/>
-				</p>
-				<p><strong>Hora: </strong>{{hora}}</p>
+			<div ng-show="ready == 2" class="alert alert-dismissible alert-success">
+				<strong>Datos correctos. </strong> Iniciando sesión...
 			</div>
 			
 			<div ng-show="ready == 3" class="alert alert-dismissible alert-danger">
-				<strong>Error: </strong> No has introducido una ciudad válida.
-			</div>
-			
-			<div ng-show="ready == 4" class="alert alert-dismissible alert-danger">
-				Se ha producido un error en la conexión con el servidor.
+				<strong>Error: </strong> Usuario y/o contraseña incorrectos.
 			</div>
 		</section>
 	</div>
 	
 	<script type="text/javascript" src="resources/scripts/js/jquery-3.2.1.min.js"></script>
 	<script type="text/javascript" src="resources/scripts/js/angular.min.js"></script>
-	<script type="text/javascript" src="resources/scripts/js/main.js"></script>
+	<script type="text/javascript" src="resources/scripts/js/index.js"></script>
 </body>
 </html>
