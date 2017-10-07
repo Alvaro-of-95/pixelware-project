@@ -3,9 +3,11 @@ var tiempo = angular.module("appTiempo", []);
 
 // Controlador principal de la aplicación:
 var controlador = tiempo.controller("appController",
-		["$scope", "$http", function($scope, $http) {
+	["$scope", "$http", function($scope, $http) {
 			// Definir variables de ámbito de Angular:
 			$scope.data = [];
+			$scope.ciudad;
+			$scope.hora;
 			
 			/* Variable ready: Indica el estado de la petición, para
 			 * usarlo en la directiva ng-show y mostrar los bloques
@@ -25,17 +27,31 @@ var controlador = tiempo.controller("appController",
 				$http({
 					method: 'GET',
 					url: 'http://api.apixu.com/v1/current.json?key=4dc1395b72974483bff105320170610&q='
-						 + formData.nombre
+						 + $scope.ciudad
 				
 				// Si la petición devuelve resultado, guardarlo en la variable:
 				}).success(function(datos, status, headers, config) {
 					$scope.data = datos;
 					$scope.ready = 2;
+					
+					// Sacar la hora de la cadena devuelta por el json
+					// (que devuelte la fecha junto a la hora:
+					var cadenaHora = datos.location.localtime.split(" ");
+					$scope.hora = cadenaHora[1];
 				
-				// Si la petición devuelve un error, mostrarlo:
+				// Si la petición devuelve un error, mostrar el bloque de error
+				// con el nombre de la ciudad introducida::
 				}).error(function(datos, status, headers, config) {
-					$scope.ready = 3;
+					if (status == 400) {
+						// Si el código de estado es 400, se debe
+						// a que el nombre introducido no existe:
+						$scope.ready = 3;
+					} else {
+						// Si es otro código de error:
+						$scope.ready = 4;
+					}
 				});
+				
+				$scope.ciudad = "";
 			}
-			
 		}]);
