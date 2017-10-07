@@ -1,0 +1,136 @@
+body {
+	padding-bottom: 30px;
+	background: #3E312A;
+    font-size: 15px;
+}
+
+body .container section {
+	text-align: center;
+	min-height: 220px;
+	margin-top: 50px;
+	padding: 0px 0px 1px 0px;
+	background: #E0E0E1;
+	box-shadow: 0px 0px 8px 2px rgba(0, 0, 0, 1);
+}
+
+body .container section .header {
+	padding: 8px 15px 10px 30px;
+	margin-bottom: 30px;
+	color: white;
+	background: #5B40C4;
+}
+
+.header h3 {
+	margin-top: 8px;
+	margin-bottom: 0px;
+	color: white;
+}
+
+.header a {
+	text-decoration: none;
+	padding: 10px 20px 10px 20px;
+	font-size: 20px;
+	color: white;
+	background: none;
+	box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.75);
+	transition: background 0.3s, box-shadow 0.3s;
+}
+
+.header a:hover {
+	background: #FF7A12;
+	box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.75);
+	transition: background 0.3s, box-shadow 0.3s;
+}
+
+input[type="text"] {
+	outline: none;
+	padding-left: 10px;
+	margin-left: 10px;
+	height: 40px;
+	font-weight: normal;
+	border: 2px solid #E0E0E1;
+	transition: border 0.4s;
+}
+
+.container section form input[type="text"]:focus {
+	border: 2px solid #172CFF;
+	box-shadow: inset 0 0 0 0px white;
+	transition: border 0.4s;
+}
+
+.historial {
+	margin-top: 8px;
+	margin-bottom: 8px;
+}
+
+.container section form div select {
+	margin-left: 10px;
+	padding: 5px 12px 5px 12px;
+}
+
+.container section form div select:focus {
+	outline: none;
+	boder: 1.5px solid #172CFF;
+	box-shadow: inset 0 0 0 0px white;
+}
+
+input[type="submit"] {
+	outline: none;
+	border: none;
+	width: 55%;
+	margin-top: 20px;
+	margin-bottom: 40px;
+	padding: 6px 10px 6px 10px;
+	font-size: 18px;
+	color: white;
+	background: #5B40C4;
+	box-shadow: 0px 0px 0px 0px rgba(0,0,0,0.75);
+	transition: background 0.4s, box-shadow 0.4s;
+}
+
+input[type="submit"]:hover {
+	background: #1E00A2;
+	box-shadow: 0px 4px 16px 0px rgba(0,0,0,0.75);
+	transition: background 0.4s, box-shadow 0.4s;
+}
+
+input[type="submit"]:active {
+	background: #1E00A2;
+	box-shadow: 0px 0px 0px 0px rgba(0,0,0,0.75);
+	transition: background 0s, box-shadow 0s;
+}
+
+/* CSS para eliminar el fondo amarillo en el autocompletar: */
+body .container section form input[type="text"]:-webkit-autofill {
+	-webkit-box-shadow: 0 0 0px 60px white inset;
+}
+
+body .container section form input[type="text"]:-moz-autofill {
+	-moz-box-shadow: 0 0 0px 60px white inset;
+}
+
+.content {
+	margin-bottom: 30px;
+}
+
+.content h3 {
+	margin-top: 0px;
+	margin-bottom: 15px;
+}
+
+p {
+	margin-bottom: 0px;
+}
+
+.alert {
+	margin-left: 15px;
+	margin-right: 15px;
+}
+
+.alert-info {
+	background: #3390FF;
+}
+
+.alert-danger {
+	background: #FF3521;
+}
