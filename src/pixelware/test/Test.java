@@ -17,7 +17,7 @@ public class Test {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			
-			// Conexión a la BBDD, se mantiene abierta:
+			// Conexión a la BBDD mysql (hosting online gratuito):
 			String conn_db = "sql11198254";
 			String conn_url = "jdbc:mysql://sql11.freemysqlhosting.net:3306/" + conn_db;
 			String conn_user = "sql11198254";
@@ -27,8 +27,8 @@ public class Test {
 			
 			
 			// Crear usuario:
-			stmt.execute("INSERT INTO users (nombre, clave) VALUES ('manolo', 'kk')");
-			System.out.println("Usuario creado.\n");
+			//stmt.execute("INSERT INTO users (nombre, clave) VALUES ('manolo', 'kk')");
+			//System.out.println("Usuario creado.\n");
 			
 			
 			// Ejecutar instrucción SELECT:
@@ -89,7 +89,7 @@ public class Test {
 		return usuarios;
 	}
 	
-	private static void crearUsuario() throws SQLException {
+	//private static void crearUsuario() throws SQLException {
 		
-	}
+	//}
 }
