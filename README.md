@@ -1,7 +1,11 @@
 # pixelware-project
 Proyecto de fin de curso
 
-Cambios:
-  - Ficheros index.html, main.css y main.js renombrados a weather.html, weather.css y weather.js, respectivamente
-  - Añadidos los ficheros index.html, index.css e index.js
-  - Añadida la carpeta lib y la librería con el conector de mysql
+Cambios - Creada la estructura de Spring MVC:
+  - Añadidas las librerías de spring y jtds
+  - Añadidos los siguientes paquetes con sus clases:
+      - pixelware.config: FrontController, ComponentesWeb y ComponentesNoWeb
+      - pixelware.model: User
+      - pixelware.web: LoginController y WeatherController
+      - pixelware.test: Test
+  - Probada la conexión a la BBDD remota (alojada en el hosting gratuito freemysqlhosting.net)
