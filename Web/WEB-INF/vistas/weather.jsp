@@ -6,6 +6,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Consulta del tiempo</title>
 	<link rel="stylesheet" type="text/css" href="resources/styles/css/bootswatch-paper.css">
+	<link rel="stylesheet" type="text/css" href="resources/styles/css/global.css"/>
 	<link rel="stylesheet" type="text/css" href="resources/styles/css/weather.css"/>
 </head>
 <body ng-controller="appController">
@@ -13,8 +14,8 @@
 	<div class="container">
 		<section class="col-md-6 col-md-offset-3">
 			<div class="col-xs-12 header">
-				<h3 class="pull-left">Usuario</h3>
-				<a href="login" class="pull-right">Cerrar sesión</a>
+				<h3 class="pull-left">${user.nombre}</h3>
+				<a href="inicio" class="pull-right">Cerrar sesión</a>
 			</div>
 			
 			<form name="formData" ng-submit="showCity()">

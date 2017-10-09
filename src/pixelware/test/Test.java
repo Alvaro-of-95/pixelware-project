@@ -27,20 +27,18 @@ public class Test {
 			
 			
 			// Crear usuario:
-			//stmt.execute("INSERT INTO users (nombre, clave) VALUES ('manolo', 'kk')");
+			//stmt.execute("INSERT INTO users (nombre, clave) VALUES ('juanjo', 'rr')");
 			//System.out.println("Usuario creado.\n");
 			
 			
 			// Ejecutar instrucción SELECT:
-			resultSet = stmt.executeQuery("SELECT id, "
+			resultSet = stmt.executeQuery("SELECT "
 					+ "nombre, clave FROM users");
 			
 			// Procesar y mostrar el ResultSet:
 			List<User> usuarios = procesarRegistros(resultSet);
+			System.out.println("Usuarios:");
 			usuarios.stream().forEach(System.out::println);
-			
-			
-			
 			
 		} catch (Exception e) {
 			System.out.println("Error de BBDD.");
@@ -70,19 +68,17 @@ public class Test {
 	private static List<User> procesarRegistros(ResultSet resultSet2) throws SQLException {
 		List<User> usuarios = new ArrayList<>();
 		
-		int id = 0;
 		String nombre = null;
 		String clave = null;
 		
 		while (resultSet2.next()) {
 			// Acceso a las columnas del registro actual del Resultset
 			// (donde se encuentra el cursor) por índice en base 1:
-			id = resultSet2.getInt(1);
-			nombre = resultSet2.getString(2);
-			clave = resultSet2.getString(3);
+			nombre = resultSet2.getString(1);
+			clave = resultSet2.getString(2);
 			
 			// Crear Usuario:
-			User usuario = new User(id, nombre, clave);
+			User usuario = new User(nombre, clave);
 			usuarios.add(usuario);
 		}
 		
