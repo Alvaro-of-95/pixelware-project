@@ -6,12 +6,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
+import org.springframework.web.servlet.ModelAndView;
 import pixelware.model.User;
 
 @Controller
@@ -23,7 +24,7 @@ public class LoginController {
 	
 	// Método para crear la conexión a la BBDD:
 	@ModelAttribute
-	public void connectDB(Model model) {
+	public void connectDB() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			String conn_db = "sql11198254";
@@ -41,11 +42,34 @@ public class LoginController {
 	}
 	
 	
+	/* Método para peticines GET con URL "/" y "/inicio", comprobamos
+	 * si ya hay una sesión activa y redirigimos a la aplicación
+	 * de tiempo si es así, para evitar logear con 2 usuarios a la vez: */
+	@RequestMapping(value={"/", "/inicio"}, method=RequestMethod.GET)
+	public ModelAndView index(HttpServletRequest request) {
+		ModelAndView view = new ModelAndView();
+		
+		if (request.getSession().getAttribute("usuario") == null) {
+			view.setViewName("login");
+			view.addObject("user", new User());
+		} else {
+			// Si ya hay un usuario logeado:
+			view.setViewName("redirect:/tiempo");
+		}
+		
+		return view;
+	}
+	
+	
 	/* Método activado por el formulario de index, comprobamos
 	 * si el usuario y clave introducidos coincide con alguno
 	 * de la BBDD: */
 	@RequestMapping(value="/login", method=RequestMethod.POST)
-	public String login(@ModelAttribute("user") User formUser) {
+	public ModelAndView login(@ModelAttribute("user") User formUser,
+							Model model, HttpServletRequest request) {
+
+		ModelAndView view = new ModelAndView();
+		
 		// Ejecutar instrucción SELECT:
 		try {
 			resultSet = stmt.executeQuery("SELECT "
@@ -61,14 +85,23 @@ public class LoginController {
 				if (formUser.getNombre().equalsIgnoreCase(listUser.getNombre())
 						&& formUser.getClave().equalsIgnoreCase(listUser.getClave())) {
 					
+					// Añadir el atributo de sesión:
+					request.getSession().setAttribute("usuario", listUser.getNombre());
+					
 					// Redirigir a weather.jsp:
-					return "weather";
+					view.setViewName("redirect:/tiempo");
+					return view;
 				}
 			}
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
-			return "index";
+			// Si ha habido un problema con la conexión
+			// a la BBDD, mostramos la descripción:
+			view.setViewName("login");
+			model.addAttribute("error",
+			"Error en la conexión con la Base de datos: " + e.getMessage());
+			view.addObject("user", new User());
+			return view;
 		
 		// Cerrar la conexión con la BBDD:
 		} finally {
@@ -78,7 +111,11 @@ public class LoginController {
 		/* Si se llega a este punto, es porque se ha procesado
 		 * correctamente la BBDD pero no se han encontrado
 		 * coincidencias: */
-		return "index";
+		view.setViewName("login");
+		model.addAttribute("error",
+		"<strong>Error: </strong> Usuario y/o contraseña no válido.");
+		view.addObject("user", new User());
+		return view;
 	}
 	
 	
@@ -110,8 +147,7 @@ public class LoginController {
 		String clave = null;
 		
 		while (resultSet2.next()) {
-			// Acceso a las columnas del registro actual del Resultset
-			// (donde se encuentra el cursor) por índice en base 1:
+			// Acceso a las columnas del registro actual del Resultset:
 			nombre = resultSet2.getString(1);
 			clave = resultSet2.getString(2);
 			
@@ -122,12 +158,4 @@ public class LoginController {
 		
 		return usuarios;
 	}
-	
-	
-	
-	
-	// Método para registrar un nuevo usuario:
-	//private static void crearUsuario() throws SQLException {
-		
-	//}
 }

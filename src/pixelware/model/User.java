@@ -5,22 +5,39 @@ public class User {
 
 	private String nombre;
 	private String clave;
+	private String email;
+	private String fecha;
+	private String pais;
 	
-	// Constructor por defecto:
+	// Constructor por defecto,
+	// para cuando entramos a Index:
 	public User() {}
 	
 	
-	// Constructor general:
+	// Constructor con nombre y clave, para el Login:
 	public User(String nombre, String clave) {
 		this.nombre = nombre;
 		this.clave = clave;
 	}
+
 	
+	// Constructor general, para el Registro:
+	public User(String nombre, String clave, String email, String fecha, String pais) {
+		this.nombre = nombre;
+		this.clave = clave;
+		this.email = email;
+		this.fecha = fecha;
+		this.pais = pais;
+	}
+
+	
+	// toString, para test:
 	@Override
 	public String toString() {
-		return "User [nombre=" + nombre +
-				", clave=" + clave + "]";
+		return "User [nombre=" + nombre + ", clave=" + clave + ", email="
+				+ email + ", fecha=" + fecha + ", pais=" + pais + "]";
 	}
+
 
 	// Getter y Setter:
 	public String getNombre() {
@@ -37,5 +54,29 @@ public class User {
 	
 	public void setClave(String clave) {
 		this.clave = clave;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(String fecha) {
+		this.fecha = fecha;
+	}
+
+	public String getPais() {
+		return pais;
+	}
+
+	public void setPais(String pais) {
+		this.pais = pais;
 	}
 }

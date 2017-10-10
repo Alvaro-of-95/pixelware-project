@@ -5,6 +5,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Consulta del tiempo</title>
+	<link rel="shortcut icon" href="resources/styles/img/favicon.ico">
 	<link rel="stylesheet" type="text/css" href="resources/styles/css/bootswatch-paper.css">
 	<link rel="stylesheet" type="text/css" href="resources/styles/css/global.css"/>
 	<link rel="stylesheet" type="text/css" href="resources/styles/css/weather.css"/>
@@ -12,10 +13,10 @@
 <body ng-controller="appController">
 
 	<div class="container">
-		<section class="col-md-6 col-md-offset-3">
+		<section class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2">
 			<div class="col-xs-12 header">
-				<h3 class="pull-left">${user.nombre}</h3>
-				<a href="inicio" class="pull-right">Cerrar sesión</a>
+				<h3 class="pull-left">${sessionScope.usuario}</h3>
+				<a href="logout" class="pull-right">Cerrar sesión</a>
 			</div>
 			
 			<form name="formData" ng-submit="showCity()">
@@ -27,12 +28,12 @@
 				
 				<div class="historial">
 					<span>Historial</span>
-					<select>
-						<option>Paris</option>
-						<option>Madrid</option>
-						<option>Londres</option>
-						<option>Nueva York</option>
-						<option>Dublin</option>
+					<select ng-model="ciudad" ng-change="showCity()">
+						<option value="Paris">Paris</option>
+						<option value="Madrid">Madrid</option>
+						<option value="Londres">Londres</option>
+						<option value="Nueva York">Nueva York</option>
+						<option value="Dublin">Dublin</option>
 					</select>
 				</div>
 				

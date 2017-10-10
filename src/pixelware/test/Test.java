@@ -1,91 +1,52 @@
 package pixelware.test;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-import pixelware.model.User;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
+import com.bsd.beans.Category;
+import com.bsd.config.ApplicationConfig;
+import com.bsd.services.CategoryService;
 
+/* AnnotationConfigApplicationContext registra todos los beans de la aplicación
+ * mediante la clase de configuración ApplicationConfig en tiempo de ejecución: */
 public class Test {
-	private static Connection conn = null;
-	private static Statement stmt;
-	private static ResultSet resultSet;
-	
 	public static void main(String[] args) {
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			
-			// Conexión a la BBDD mysql (hosting online gratuito):
-			String conn_db = "sql11198254";
-			String conn_url = "jdbc:mysql://sql11.freemysqlhosting.net:3306/" + conn_db;
-			String conn_user = "sql11198254";
-			String conn_pass = "fM4bE8BVdf";
-			conn = DriverManager.getConnection(conn_url, conn_user, conn_pass);
-			stmt = conn.createStatement();
-			
-			
-			// Crear usuario:
-			//stmt.execute("INSERT INTO users (nombre, clave) VALUES ('juanjo', 'rr')");
-			//System.out.println("Usuario creado.\n");
-			
-			
-			// Ejecutar instrucción SELECT:
-			resultSet = stmt.executeQuery("SELECT "
-					+ "nombre, clave FROM users");
-			
-			// Procesar y mostrar el ResultSet:
-			List<User> usuarios = procesarRegistros(resultSet);
-			System.out.println("Usuarios:");
-			usuarios.stream().forEach(System.out::println);
-			
-		} catch (Exception e) {
-			System.out.println("Error de BBDD.");
-			e.printStackTrace();
-			
-		} finally {
-			// Parar y librerar objetos:
-			try {
-				if (resultSet != null) {
-					resultSet.close();
-				}
-				if (stmt != null) {
-					stmt.close();
-				}
-				if (conn != null) {
-					conn.close();
-				}
-				
-			} catch (SQLException e) {
-				System.out.println("Error en el cierre del Servidor.");
-				e.printStackTrace();
-			}
-		}
+		
+		AbstractApplicationContext context =
+				new AnnotationConfigApplicationContext(
+						ApplicationConfig.class);
+		
+		/* Recuperar dentro de la aplicación Spring el
+		 * componente categoryService: */
+		CategoryService service = (CategoryService)
+				context.getBean("categoryService");
+		
+		Category category = new Category("Ropa", "Todo tipo de prendas");		
+		Category category2 = new Category("Borrar", "Sin descripción");
 
+		service.addCategory(category);
+		service.addCategory(category2);
+		
+		// Probar métodos de negocio:
+		System.out.println("\nListado de categorías iniciales:");
+		service.findAll().stream().forEach(System.out::println);
+		service.deleteCategory(4);
+		category.setCategory_name("Clothes");
+		service.editCategory(category, category.getCategory_id());
+		
+		System.out.println("\nListado de categorías finales:");
+		service.findAll().stream().forEach(System.out::println);
+
+		System.out.println("\nCódigo de la categoría Accesorios: "
+						+ service.getCode("Accesorios"));
+		
+		System.out.println("\nCódigo de la última categoría: "
+				+ service.getLastCategoryCode() + "\n"
+				+ service.findCategory(service.getLastCategoryCode()));
+		
+		context.close();
 	}
-	
-	private static List<User> procesarRegistros(ResultSet resultSet2) throws SQLException {
-		List<User> usuarios = new ArrayList<>();
-		
-		String nombre = null;
-		String clave = null;
-		
-		while (resultSet2.next()) {
-			// Acceso a las columnas del registro actual del Resultset
-			// (donde se encuentra el cursor) por índice en base 1:
-			nombre = resultSet2.getString(1);
-			clave = resultSet2.getString(2);
-			
-			// Crear Usuario:
-			User usuario = new User(nombre, clave);
-			usuarios.add(usuario);
-		}
-		
-		return usuarios;
-	}
-	
-	//private static void crearUsuario() throws SQLException {
-		
-	//}
 }
+
+
+
+
+
