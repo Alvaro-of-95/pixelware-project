@@ -2,4 +2,5 @@
 Proyecto de fin de curso
 
 Cambios:
-  - Añadido el sistema de login
+  - Añadido el sistema de registro
+  - Establecida la configuración de sesiones
