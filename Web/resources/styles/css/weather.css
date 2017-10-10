@@ -1,18 +1,7 @@
-body .container section {
-	padding: 0px;
-}
-
-body .container section .header {
-	padding: 8px 15px 10px 30px;
-	margin-bottom: 30px;
-	color: white;
-	background: #5B40C4;
-}
-
 .header h3 {
 	margin-top: 8px;
 	margin-bottom: 0px;
-	color: white;
+	text-transform: capitalize;
 }
 
 .header a {
@@ -26,7 +15,7 @@ body .container section .header {
 }
 
 .header a:hover {
-	background: #FF7A12;
+	background: #FF3F14;
 	box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.75);
 	transition: background 0.3s, box-shadow 0.3s;
 }
@@ -34,17 +23,6 @@ body .container section .header {
 .historial {
 	margin-top: 8px;
 	margin-bottom: 8px;
-}
-
-.container section form div select {
-	margin-left: 10px;
-	padding: 5px 12px 5px 12px;
-}
-
-.container section form div select:focus {
-	outline: none;
-	boder: 1.5px solid #172CFF;
-	box-shadow: inset 0 0 0 0px white;
 }
 
 .content {
@@ -58,9 +36,4 @@ body .container section .header {
 
 .content p {
 	margin-bottom: 0px;
-}
-
-.alert {
-	margin-left: 15px;
-	margin-right: 15px;
 }

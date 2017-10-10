@@ -1,5 +1,5 @@
-h3.login {
-	margin-bottom: 20px;
+body .container section {
+	padding-bottom: 15px;
 }
 
 table {
@@ -7,8 +7,18 @@ table {
 	margin-right: auto;
 }
 
+table.register {
+	width: 65%;
+}
+
+select {
+	margin-top: 3px;
+	margin-left: 10px;
+}
+
 input[type="submit"] {
 	margin-bottom: 20px;
+	width: 65%;
 }
 
 .alert {

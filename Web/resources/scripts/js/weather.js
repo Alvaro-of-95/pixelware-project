@@ -19,7 +19,7 @@ var controlador = tiempo.controller("appController",
 			$scope.ready = 0;
 			
 			// Método activado por el formulario:
-			$scope.showCity = function(formData) {
+			$scope.showCity = function() {
 				$scope.ready = 1;
 				
 				// Realizar la petición, añadiendo la cadena introducida
@@ -38,10 +38,12 @@ var controlador = tiempo.controller("appController",
 					// (que devuelte la fecha junto a la hora:
 					var cadenaHora = datos.location.localtime.split(" ");
 					$scope.hora = cadenaHora[1];
+					$scope.ciudad = "";
 				
 				// Si la petición devuelve un error, mostrar el bloque de error
 				// con el nombre de la ciudad introducida::
 				}).error(function(datos, status, headers, config) {
+					$scope.ciudad = "";
 					if (status == 400) {
 						// Si el código de estado es 400, se debe
 						// a que el nombre introducido no existe:
@@ -51,7 +53,5 @@ var controlador = tiempo.controller("appController",
 						$scope.ready = 4;
 					}
 				});
-				
-				$scope.ciudad = "";
 			}
 	}]);
