@@ -4,7 +4,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>Login</title>
+	<title>Registro</title>
 	<link rel="shortcut icon" href="resources/styles/img/favicon.ico">
 	<link rel="stylesheet" type="text/css" href="resources/styles/css/bootswatch-paper.css">
 	<link rel="stylesheet" type="text/css" href="resources/styles/css/global.css"/>
@@ -15,11 +15,11 @@
 	<div class="container">
 		<section class="col-md-6 col-md-offset-3">
 			<div class="col-xs-12 header">
-				<h3>Login</h3>
+				<h3>Registro</h3>
 			</div>
 		
-			<form method="post" modelAttribute="user" action="login">
-				<table>
+			<form method="post" modelAttribute="user" action="crear">
+				<table class="register">
 					<tr>
 						<td>Usuario</td>
 						<td>
@@ -34,12 +34,38 @@
 							required="required"/>
 						</td>
 					</tr>
+					<tr>
+						<td>Email</td>
+						<td>
+							<input type="email" name="email" id="email"
+							required="required"/>
+						</td>
+					</tr>
+					<tr>
+						<td>Fecha de nacimiento</td>
+						<td>
+							<input type="date" name="fecha" id="fecha"
+							required="required"/>
+						</td>
+					</tr>
+					<tr>
+						<td>País</td>
+						<td>
+							<select name="pais">
+								<option value="espana">España</option>
+								<option value="francia">Francia</option>
+								<option value="alemania">Alemania</option>
+								<option value="eeuu">Estados Unidos</option>
+								<option value="china">China</option>
+							</select>
+						</td>
+					</tr>
 				</table>
 				
-				<input type="submit" value="Iniciar sesión"/>
+				<input type="submit" value="Crear cuenta"/>
 			</form>
 			
-			<p>¿No tienes cuenta? <a href="registro">Crea una aquí</a></p>
+			<p>¿Ya tienes cuenta? <a href="inicio">Inicia sesión aquí</a></p>
 			
 			<div class="alert alert-dismissible alert-info">
 				Procesando...
@@ -47,7 +73,7 @@
 			
 			<div class="alert alert-dismissible alert-danger fade in">
 				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-				<span>${error}</span>
+				<span> ${error}</span>
 			</div>
 		</section>
 	</div>
