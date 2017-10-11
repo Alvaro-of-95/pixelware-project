@@ -18,7 +18,10 @@ var controlador = tiempo.controller("appController",
 			 *		- Si ready = 3: Mostramos el bloque de error. */
 			$scope.ready = 0;
 			
-			// Método activado por el formulario:
+			
+			/* Método activado por el formulario, por un lado realiza
+			 * la petición a apixu para obtener los datos del tiempo, y
+			 * por otro otra petición para el historial: */
 			$scope.showCity = function() {
 				$scope.ready = 1;
 				
@@ -53,5 +56,21 @@ var controlador = tiempo.controller("appController",
 						$scope.ready = 4;
 					}
 				});
+				
+				
+				// Mandamos la segunda petición para guardar la ciudad buscada:
+				$http({
+					method: 'POST',
+					url: '/pixelware/historial',
+					data: $scope.ciudad,
+					headers: {
+						'Content-Type': "text/html"
+					}
+				});
 			}
 	}]);
+
+
+
+
+
