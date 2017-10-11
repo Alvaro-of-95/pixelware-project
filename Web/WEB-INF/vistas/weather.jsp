@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html ng-app="appTiempo">
 <head>
@@ -29,11 +30,9 @@
 				<div class="historial">
 					<span>Historial</span>
 					<select ng-model="ciudad" ng-change="showCity()">
-						<option value="Paris">Paris</option>
-						<option value="Madrid">Madrid</option>
-						<option value="Londres">Londres</option>
-						<option value="Nueva York">Nueva York</option>
-						<option value="Dublin">Dublin</option>
+						<c:forEach items="${history}" var="item">
+							<option value="${item.nombre}"><c:out value="${item.nombre}"/></option>
+						</c:forEach>
 					</select>
 				</div>
 				

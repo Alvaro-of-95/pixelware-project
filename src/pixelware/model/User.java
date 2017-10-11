@@ -1,6 +1,6 @@
 package pixelware.model;
 
-// Entidad que encapsula la tabla CATEGORIES de la BBDD MySQL:
+// Entidad que encapsula la tabla Users de la BBDD MySQL:
 public class User {
 
 	private String nombre;
