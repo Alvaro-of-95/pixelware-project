@@ -26,7 +26,7 @@ public class LoginController {
 			view.setViewName("login");
 			view.addObject("user", new User());
 		} else {
-			// Si ya hay un usuario logeado:
+			// Si ya hay un usuario logeado, no le dejamos ir a login:
 			view.setViewName("redirect:/tiempo");
 		}
 		

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
-<html>
+<html ng-app="appUsuarios">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Registro</title>
@@ -10,7 +10,7 @@
 	<link rel="stylesheet" type="text/css" href="resources/styles/css/global.css"/>
     <link rel="stylesheet" type="text/css" href="resources/styles/css/login.css"/>
 </head>
-<body>
+<body ng-controller="appController">
 	
 	<div class="container">
 		<section class="col-md-6 col-md-offset-3">
@@ -51,12 +51,11 @@
 					<tr>
 						<td>País</td>
 						<td>
+							<!-- Cargar con Angular los paises del fichero JSON: -->
 							<select name="pais">
-								<option value="espana">España</option>
-								<option value="francia">Francia</option>
-								<option value="alemania">Alemania</option>
-								<option value="eeuu">Estados Unidos</option>
-								<option value="china">China</option>
+								<option ng-repeat="item in paises" value="{{item.nombre}}">
+									{{item.nombre}}
+								</option>
 							</select>
 						</td>
 					</tr>
@@ -79,6 +78,7 @@
 	</div>
 	
 	<script type="text/javascript" src="resources/scripts/js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="resources/scripts/js/angular.min.js"></script>
 	<script type="text/javascript" src="resources/scripts/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="resources/scripts/js/login-registro.js"></script>
 </body>
