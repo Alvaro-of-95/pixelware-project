@@ -1,6 +1,8 @@
 package pixelware.controller;
-import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -8,7 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import pixelware.model.User;
-import pixelware.model.BDUtilities;
+import pixelware.services.UserService;
+import pixelware.config.ApplicationConfig;
 
 @Controller
 public class RegisterController {
@@ -32,29 +35,34 @@ public class RegisterController {
 		
 		try {
 			// Ejecutar el insert:
-			BDUtilities.register(formUser.getNombre(), formUser.getClave(),
+			AbstractApplicationContext context =
+					new AnnotationConfigApplicationContext(ApplicationConfig.class);
+			UserService service = (UserService) context.getBean("userService");
+			
+			// Crear el objeto user y insertarlo en la BBDD con el método del DAO:
+			User user = new User(formUser.getNombre(), formUser.getClave(),
 					formUser.getEmail(), formUser.getFecha(), formUser.getPais());
 			
-		} catch (SQLException e) {
+			service.register(user);
+
+			context.close();
+			
+		} catch (DuplicateKeyException ex) {
+			// Si se intenta registrar un nombre de usuario que ya ha sido
+			// utilizado, saltará esta excepción:
 			view.setViewName("register");
-			
-			/* 1062 es el código de error de MySQL al insertar clave primaria
-			 * duplicada (Nombre es el campo clave), si se intenta introducir
-			 * un usuario que ya existe mostramos ese error: */
-			if (e.getErrorCode() == 1062) {
-				model.addAttribute("error", "<strong>Error: "
-						+ "</strong>El usuario introducido ya existe.");
-				System.out.println(e.getMessage());
-		        
-		    } else {
-		    	// Si es otro tipo de error, mostramos la descripción:
-				model.addAttribute("error", "<strong>Error</strong> en la"
-									+ "transacción: " + e.getMessage());
-		    }
-			
+			model.addAttribute("error", "<strong>Error: "
+					+ "</strong>El usuario introducido ya existe.");
 			view.addObject("user", new User());
 			return view;
 			
+		} catch (Exception e) {
+			// Si es cualquier otro error:
+			view.setViewName("register");
+		    model.addAttribute("error", "<strong>Error</strong> en la"
+						+ "transacción: " + e.getMessage());
+			view.addObject("user", new User());
+			return view;
 		}
 		
 		// Si ha ido bien, ir a la página de la app ya logeado:

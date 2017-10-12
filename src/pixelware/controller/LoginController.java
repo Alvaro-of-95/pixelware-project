@@ -1,6 +1,8 @@
 package pixelware.controller;
 import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -8,7 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import pixelware.model.User;
-import pixelware.model.BDUtilities;
+import pixelware.services.UserService;
+import pixelware.config.ApplicationConfig;
 
 @Controller
 public class LoginController {
@@ -41,13 +44,21 @@ public class LoginController {
 		ModelAndView view = new ModelAndView();
 		
 		try {
+			// Contexto jdbc para ejecutar la consulta:
+			AbstractApplicationContext context =
+					new AnnotationConfigApplicationContext(ApplicationConfig.class);
+			UserService service = (UserService) context.getBean("userService");
+			
+			// Guardar en la variable el resultado de la comprobación:
+			boolean existe = service.searchUser(
+					new User(formUser.getNombre(), formUser.getClave()));
+
+			context.close();
+			
 			// Si el método devuelve true es porque el usuario
 			// y clave del formulario existen en la BBDD:
-			if (BDUtilities.searchUser(formUser.getNombre(), formUser.getClave())) {
-				// Añadir el atributo de sesión:
+			if (existe) {
 				request.getSession().setAttribute("usuario", formUser.getNombre());
-					
-				// Redirigir a weather.jsp:
 				view.setViewName("redirect:/tiempo");
 				return view;
 			}

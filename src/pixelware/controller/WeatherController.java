@@ -2,18 +2,19 @@ package pixelware.controller;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import pixelware.model.User;
-import pixelware.model.BDUtilities;
-import pixelware.model.Ciudad;
+import pixelware.services.UserService;
+import pixelware.config.ApplicationConfig;
+import pixelware.model.History;
 
 @Controller
 public class WeatherController {
@@ -41,15 +42,21 @@ public class WeatherController {
 			
 			// Recuperamos el historial y lo añadimos:
 			try {
-				List<Ciudad> historial = 
-						new ArrayList<Ciudad>(BDUtilities.getHistory(usuario));
+				AbstractApplicationContext context =
+						new AnnotationConfigApplicationContext(ApplicationConfig.class);
+				UserService service = (UserService) context.getBean("userService");
+				
+				List<History> historial = 
+						new ArrayList<History>(service.getHistory(new User(usuario)));
+
+				context.close();
 
 				view.addObject("history", historial);
 				
-			} catch (SQLException e) {
+			} catch (Exception e) {
 				// Si se produce un error metemos una lista vacía,
 				// si no daría error en la vista:
-				List<Ciudad> historial = new ArrayList<Ciudad>();
+				List<History> historial = new ArrayList<History>();
 				view.addObject("history", historial);
 			}
 			
@@ -63,10 +70,19 @@ public class WeatherController {
 	 * aquí para guardarla en la BBDD: */
 	@RequestMapping(value = "/historial", method=RequestMethod.POST,
 								consumes="text/html")
-	public void historial (@RequestBody String ciudad, HttpServletRequest request)
-			throws SQLException {
+	public void historial (@RequestBody String ciudad,
+					HttpServletRequest request) throws SQLException {
+		
 		String usuario = (String) request.getSession().getAttribute("usuario");
-		BDUtilities.insertHistory(usuario, ciudad);
+		
+		// Ejecutar el insert:
+		AbstractApplicationContext context =
+				new AnnotationConfigApplicationContext(ApplicationConfig.class);
+		UserService service = (UserService) context.getBean("userService");
+		
+		service.insertHistory(usuario, ciudad);
+
+		context.close();
 	}
 }
 
