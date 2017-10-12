@@ -63,6 +63,7 @@
 		</section>
 	</div>
 	
+	<script type="text/javascript" src="resources/scripts/js/jquery-3.2.1.min.js"></script>
 	<script type="text/javascript" src="resources/scripts/js/angular.min.js"></script>
 	<script type="text/javascript" src="resources/scripts/js/weather.js"></script>
 </body>

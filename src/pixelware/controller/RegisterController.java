@@ -18,10 +18,16 @@ public class RegisterController {
 	/* Método para peticines GET con URL "/registro",
 	 * redirigir a index.jsp: */
 	@RequestMapping(value="/registro", method=RequestMethod.GET)
-	public ModelAndView register() {
+	public ModelAndView register(HttpServletRequest request) {
 		ModelAndView view = new ModelAndView();
-		view.setViewName("register");
-		view.addObject("user", new User());
+		
+		if (request.getSession().getAttribute("usuario") == null) {
+			view.setViewName("register");
+			view.addObject("user", new User());
+		} else {
+			// Si ya hay un usuario logeado, no le dejamos ir a registro:
+			view.setViewName("redirect:/tiempo");
+		}
 		
 		return view;
 	}
