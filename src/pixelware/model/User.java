@@ -13,6 +13,10 @@ public class User {
 	// para cuando entramos a Index:
 	public User() {}
 	
+	// Constructor solo con nombre, para el historial:
+	public User(String nombre) {
+		this.nombre = nombre;
+	}
 	
 	// Constructor con nombre y clave, para el Login:
 	public User(String nombre, String clave) {
@@ -20,7 +24,6 @@ public class User {
 		this.clave = clave;
 	}
 
-	
 	// Constructor general, para el Registro:
 	public User(String nombre, String clave, String email, String fecha, String pais) {
 		this.nombre = nombre;

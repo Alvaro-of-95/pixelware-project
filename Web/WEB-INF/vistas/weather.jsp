@@ -31,7 +31,7 @@
 					<span>Historial</span>
 					<select ng-model="ciudad" ng-change="showCity()">
 						<c:forEach items="${history}" var="item">
-							<option value="${item.nombre}"><c:out value="${item.nombre}"/></option>
+							<option value="${item.ciudad}"><c:out value="${item.ciudad}"/></option>
 						</c:forEach>
 					</select>
 				</div>
